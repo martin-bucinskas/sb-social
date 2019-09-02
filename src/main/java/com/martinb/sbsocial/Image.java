@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Image {
 
-    private String id;
+    private int id;
     private String name;
 
-    public Image(String id, String name) {
+    public Image(int id, String name) {
         this.id = id;
         this.name = name;
     }

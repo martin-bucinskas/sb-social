@@ -22,9 +22,9 @@ public class ImageController {
     @GetMapping(API_BASE_PATH + "/images")
     Flux<Image> images() {
         return Flux.just(
-                new Image("1", "test-image-1.jpg"),
-                new Image("2", "test-image-2.jpg"),
-                new Image("3", "test-image-3.jpg")
+                new Image(1, "test-image-1.jpg"),
+                new Image(2, "test-image-2.jpg"),
+                new Image(3, "test-image-3.jpg")
         );
     }
 
