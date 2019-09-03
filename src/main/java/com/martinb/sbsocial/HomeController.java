@@ -27,7 +27,7 @@ public class HomeController {
     @GetMapping(value = BASE_PATH + "/" + FILENAME + "/raw", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     public Mono<ResponseEntity<?>> oneRawImage(@PathVariable String filename) {
-        return imageService.findOneImage(filename).map(resource -> {
+        return imageService.findOneImage(filename).log("oneRawImage-findOneImage").map(resource -> {
             try {
                 return ResponseEntity.ok()
                         .contentLength(resource.contentLength())
@@ -35,24 +35,29 @@ public class HomeController {
             } catch(IOException e) {
                 return ResponseEntity.badRequest().body("Couldn't find " + filename + " => " + e.getMessage());
             }
-        });
+        })
+                .log("oneRawImage-map");
     }
 
     @PostMapping(value = BASE_PATH)
     public Mono<String> createFile(@RequestPart(name = "file") Flux<FilePart> files) {
         return imageService.createImage(files)
-                .then(Mono.just("redirect:/"));
+                .log("createFile-createImage")
+                .then(Mono.just("redirect:/").log("createFile-just"))
+                .log("createFile-then");
     }
 
     @DeleteMapping(BASE_PATH + "/" + FILENAME)
     public Mono<String> deleteFile(@PathVariable String filename) {
         return imageService.deleteImage(filename)
-                .then(Mono.just("redirect:/"));
+                .log("deleteFile-deleteImage")
+                .then(Mono.just("redirect:/").log("deleteFile-just"))
+                .log("deleteFile-then");
     }
 
     @GetMapping("/")
     public Mono<String> index(Model model) {
         model.addAttribute("images", imageService.findAllImages());
-        return Mono.just("index");
+        return Mono.just("index").log("index-just");
     }
 }

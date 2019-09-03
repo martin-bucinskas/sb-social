@@ -1,5 +1,14 @@
+#spring:
+#  data.mongodb:
+#    host: 172.17.0.2
+#    port: 27017
+
 logging:
   level:
+    com.martinb: DEBUG
+    org.springframework.data: TRACE
     io:
-      netty: DEBUG
-    reactor: DEBUG
+      netty: TRACE
+    reactor:
+      core: TRACE
+      util: TRACE
