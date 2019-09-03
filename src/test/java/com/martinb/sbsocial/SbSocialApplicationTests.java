@@ -11,6 +11,7 @@ public class SbSocialApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 }
