@@ -64,14 +64,6 @@ public class ImageService {
                 .log("findOneImage");
     }
 
-    public Flux<Image> findImagesWithTags(List<String> tags) {
-        Image image = new Image();
-        image.setTags(tags);
-        Example<Image> example = Example.of(image);
-
-        return mongoOperations.find(new Query(byExample(example)), Image.class);
-    }
-
     public Mono<Void> createImage(Flux<FilePart> files) {
         return files.log("createImage-files").flatMap(file -> {
             Mono<Image> saveDatabaseImage = imageRepository.save(new Image(UUID.randomUUID().toString(), file.filename()))

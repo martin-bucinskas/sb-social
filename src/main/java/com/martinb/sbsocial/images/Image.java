@@ -9,13 +9,11 @@ import java.util.List;
 
 @Data
 @Document
-@NoArgsConstructor
 public class Image {
 
     @Id
-    private String id;
-    private String name;
-    private List<String> tags;
+    private final String id;
+    private final String name;
 
     public Image(String id, String name) {
         this.id = id;
