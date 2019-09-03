@@ -1,4 +1,4 @@
-package com.martinb.sbsocial;
+package com.martinb.sbsocial.images;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Image {
+
 
     private int id;
     private String name;

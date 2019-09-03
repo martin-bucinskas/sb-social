@@ -1,4 +1,4 @@
-package com.martinb.sbsocial;
+package com.martinb.sbsocial.images;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,6 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.util.FileSystemUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
