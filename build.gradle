@@ -27,4 +27,9 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	compile('org.synchronoss.cloud:nio-multipart-parser:1.1.0')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
+	testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+	implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.0.0-alpha-2'
+	implementation 'org.seleniumhq.selenium:selenium-api:4.0.0-alpha-2'
+	implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-2'
+	implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.0.0-alpha-2'
 }
