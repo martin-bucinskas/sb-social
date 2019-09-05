@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.1.7.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id 'com.gorylenko.gradle-git-properties' version '1.4.17'
 }
 
 group = 'com.martinb'
@@ -12,6 +13,10 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+}
+
+springBoot {
+	buildInfo()
 }
 
 repositories {
@@ -25,12 +30,14 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.4'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
-	compile('org.synchronoss.cloud:nio-multipart-parser:1.1.0')
-	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
-	testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+	compile 'org.synchronoss.cloud:nio-multipart-parser:1.1.0'
+	compile 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+	testCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
 	implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.0.0-alpha-2'
 	implementation 'org.seleniumhq.selenium:selenium-api:4.0.0-alpha-2'
 	implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-2'
 	implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.0.0-alpha-2'
 	implementation 'org.seleniumhq.selenium:htmlunit-driver:2.36.0'
+	compile 'org.springframework.boot:spring-boot-devtools'
+	compile 'org.springframework.boot:spring-boot-starter-actuator'
 }
