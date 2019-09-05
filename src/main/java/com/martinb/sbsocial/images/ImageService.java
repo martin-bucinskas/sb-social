@@ -1,5 +1,7 @@
 package com.martinb.sbsocial.images;
 
+import io.micrometer.core.instrument.Meter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -33,26 +35,16 @@ public class ImageService {
 
     private final ResourceLoader resourceLoader;
     private final ImageRepository imageRepository;
+    private final MeterRegistry meterRegistry;
 
     @Autowired
     private ReactiveMongoOperations mongoOperations;
 
-    public ImageService(ResourceLoader resourceLoader, ImageRepository imageRepository) {
+    public ImageService(ResourceLoader resourceLoader, ImageRepository imageRepository, MeterRegistry meterRegistry) {
         this.resourceLoader = resourceLoader;
         this.imageRepository = imageRepository;
+        this.meterRegistry = meterRegistry;
     }
-
-//    @Bean
-//    CommandLineRunner setUp() throws IOException {
-//        return args -> {
-//            FileSystemUtils.deleteRecursively(new File(UPLOAD_ROOT));
-//            Files.createDirectory(Paths.get(UPLOAD_ROOT));
-//
-//            FileCopyUtils.copy("Test file 1", new FileWriter(UPLOAD_ROOT + "/test-image-1.jpg"));
-//            FileCopyUtils.copy("Test file 2", new FileWriter(UPLOAD_ROOT + "/test-image-2.jpg"));
-//            FileCopyUtils.copy("Test file 3", new FileWriter(UPLOAD_ROOT + "/test-image-3.jpg"));
-//        };
-//    }
 
     public Flux<Image> findAllImages() {
         return imageRepository.findAll()
@@ -83,7 +75,13 @@ public class ImageService {
                     .flatMap(file::transferTo)
                     .log("createImage-copy");
 
-            return Mono.when(saveDatabaseImage, copyFile)
+            Mono<Void> countFile = Mono.fromRunnable(() -> {
+                meterRegistry
+                        .summary("files.uploaded.bytes")
+                        .record(Paths.get(UPLOAD_ROOT, file.filename()).toFile().length());
+            });
+
+            return Mono.when(saveDatabaseImage, copyFile, countFile)
                     .log("createImage-when");
         })
                 .log("createImage-flatMap")

@@ -2,7 +2,19 @@
 #  data.mongodb:
 #    host: 172.17.0.2
 #    port: 27017
-
+management:
+  address: 127.0.0.1
+  info:
+    git:
+      mode: "FULL"
+  security:
+    enabled: false
+  endpoints:
+    health:
+      show-details: "ALWAYS"
+    web:
+      exposure:
+        include: "*"
 logging:
   level:
     com.martinb: DEBUG
